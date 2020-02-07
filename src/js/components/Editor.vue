@@ -36,16 +36,15 @@ export default {
   },
   computed: {
     draggingInfo() {
-      return this.dragging ? "under drag" : "";
+      return this.dragging ? "under drag" : ""
     }
   },
   mounted() {
-    Events.$on('update-block', params => {
-      console.log(params)
-      Vue.set(this.blocks[params.index].data, params.prop, params.value)
-    })
     Events.$on('add-block', params => {
-      this.blocks.push({ tag: params.tag, type: params.type })
+      this.blocks.push({ tag: params.tag, type: params.type, data: '' })
+    })
+    Events.$on('update-block', params => {
+      Vue.set(this.blocks, params.index, params.block);
     })
     Events.$on('delete-block', index => {
       this.blocks.splice(this.blocks.indexOf(index), 1)

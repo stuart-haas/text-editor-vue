@@ -5,18 +5,19 @@
     @mouseleave="hover=false"
   >
     <transition name="fade">
-      <div class="button rte-block__drag" v-if="hover" @click="updateBlock($event)"><i class="fa fa-align-justify"></i></div>
+      <div class="button rte-block__drag" v-if="hover"><i class="fa fa-align-justify"></i></div>
     </transition>
     <div
       :is="block.tag"
       :class="[{'focus' : focus }, 'rte-block__content']"
+      v-model="block.data"
       contenteditable="true" 
       ref="content"
       @focus="focus=true"
       @blur="focus=false"
-      v-model="data"
+      @input="onInput"
     >
-      {{ data }}
+      {{ block.data }}
     </div>
     <transition name="fade">
       <div class="button rte-block__delete" v-if="hover" @click="deleteBlock(index)"><i class="far fa-times-circle"></i></div>
@@ -25,6 +26,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import { Events } from '../directives/events'
 export default {
   props: {
@@ -35,13 +37,17 @@ export default {
     index: {
       type: Number,
       required: true
+    },
+    data: {
+      type: String,
+      require: true
     }
   },
   data() {
     return {
+      self: null,
       focus: true,
-      hover: false,
-      data: ''
+      hover: false
     }
   },
   mounted() {
@@ -51,9 +57,9 @@ export default {
     deleteBlock(index) {
       Events.$emit('delete-block', {index: index})
     },
-    updateBlock(event) {
-      Events.$emit('update-block', {index: this.index, prop: 'text', value: this.data})
-    }
+    onInput: _.debounce(function(event) {
+      Events.$emit('update-block', {index: this.index, block: { tag: this.block.tag, type: this.block.type, data: event.target.innerText }})
+    }, 250)
   }
 }
 </script>
