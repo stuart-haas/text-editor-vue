@@ -22,7 +22,7 @@
 
 <script>
 import Toolbar from './Toolbar'
-import { Events } from '../directives/events'
+import { Events } from '../utils/events'
 export default {
   props: {
     icon: {
@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       hover: false
-    };
+    }
   },
   methods: {
     addBlock(tag, type) {

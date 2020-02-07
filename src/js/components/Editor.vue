@@ -4,7 +4,6 @@
       :list="blocks"
       :disabled="!enabled"
       ghost-class="ghost"
-      :move="checkMove"
       @start="dragging=true"
       @end="dragging=false"
       handle=".rte-block__drag"
@@ -18,6 +17,7 @@
       </block>
     </draggable>
     <toolbar></toolbar>
+    <pre>{{ data }}</pre>
   </div>
 </template>
 
@@ -25,7 +25,7 @@
 import draggable from 'vuedraggable'
 import Toolbar from './Toolbar'
 import Block from './Block'
-import { Events } from '../directives/events'
+import { Events } from '../utils/events'
 export default {
   data() {
     return {
@@ -35,31 +35,23 @@ export default {
       data: []
     }
   },
-  computed: {
-    draggingInfo() {
-      return this.dragging ? "under drag" : ""
-    }
-  },
   mounted() {
     Events.$on('add-block', params => {
       this.blocks.push({ tag: params.tag, type: params.type, data: { text : '' } })
-      this.updateData()
+      this.refresh()
     })
     Events.$on('update-block', params => {
       Vue.set(this.blocks, params.index, params.block)
-      this.updateData()
+      this.refresh()
     })
     Events.$on('delete-block', index => {
       this.blocks.splice(this.blocks.indexOf(index), 1)
-      this.updateData()
+      this.refresh()
     })
   },
   methods: {
-    checkMove: function(e) {
-      window.console.log("Future index: " + e.draggedContext.futureIndex);
-    },
-    updateData: function() {
-      this.data = JSON.stringify(this.blocks)
+    refresh: function() {
+      this.data = JSON.parse(JSON.stringify(this.blocks))
       console.log(this.data)
     }
   },
