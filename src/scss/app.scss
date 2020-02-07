@@ -1,22 +1,24 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,800&display=swap');
+
 
 html, body {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
 }
 
 .button {
   display: inline-block;
   background-color: transparent;
   border-radius: 4px;
-  transition: all .3s ease;
+  transition: all .2s ease;
   cursor: pointer;
 
   &:hover {
-    &.tool {
-      background-color: lightgreen;
-    }
-
     i {
       color: black;
     }
@@ -25,6 +27,16 @@ html, body {
   i {
     font-size: 1.5rem;
     color: gray;
-    transition: all .3s ease;
+    transition: all .2s ease;
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .2s ease;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0
 }

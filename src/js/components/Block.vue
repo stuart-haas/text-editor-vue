@@ -4,6 +4,9 @@
     @mouseover="hover=true"
     @mouseleave="hover=false"
   >
+    <transition name="fade">
+      <div class="button rte-block__drag" v-if="hover" @click="updateBlock($event)"><i class="fa fa-align-justify"></i></div>
+    </transition>
     <div
       :is="block.tag"
       :class="[{'focus' : focus }, 'rte-block__content']"
@@ -11,14 +14,18 @@
       ref="content"
       @focus="focus=true"
       @blur="focus=false"
+      v-model="data"
     >
-      {{ block.data.text }}
+      {{ data }}
     </div>
-    <div class="button rte-block__delete" v-if="hover" v-on:click="deleteBlock(index)"><i class="far fa-times-circle"></i></div>
+    <transition name="fade">
+      <div class="button rte-block__delete" v-if="hover" @click="deleteBlock(index)"><i class="far fa-times-circle"></i></div>
+    </transition>
   </div>
 </template>
 
 <script>
+import { Events } from '../directives/events'
 export default {
   props: {
     block: {
@@ -33,16 +40,19 @@ export default {
   data() {
     return {
       focus: true,
-      hover: false
-    };
+      hover: false,
+      data: ''
+    }
   },
   mounted() {
     this.$refs.content.focus()
   },
   methods: {
     deleteBlock(index) {
-      console.log(index)
-      this.$emit('event', {index: index})
+      Events.$emit('delete-block', {index: index})
+    },
+    updateBlock(event) {
+      Events.$emit('update-block', {index: this.index, prop: 'text', value: this.data})
     }
   }
 }
@@ -57,23 +67,36 @@ export default {
       box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     }
   }
-}
-.rte-block__content {
-  max-width: 85%;
-  margin: 0 auto;
-  padding: 1em;
-  outline: none;
-  transition: all .3s ease;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0);
-  
-  &.focus {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+
+  &__content {
+    padding: 1rem 3rem 1rem 3rem;
+    outline: none;
+    transition: all .3s ease;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0);
+    
+    &.focus {
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
   }
-}
-.rte-block__delete {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 0;
+
+  &__drag {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 1rem;
+  }
+
+  &__delete {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 1rem;
+
+    &:hover {
+      i {
+        color: red;
+      }
+    }
+  }
 }
 </style>
