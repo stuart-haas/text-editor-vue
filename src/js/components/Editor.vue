@@ -31,7 +31,8 @@ export default {
     return {
       enabled: true,
       dragging: false,
-      blocks: []
+      blocks: [],
+      data: []
     }
   },
   computed: {
@@ -41,18 +42,25 @@ export default {
   },
   mounted() {
     Events.$on('add-block', params => {
-      this.blocks.push({ tag: params.tag, type: params.type, data: '' })
+      this.blocks.push({ tag: params.tag, type: params.type, data: { text : '' } })
+      this.updateData()
     })
     Events.$on('update-block', params => {
-      Vue.set(this.blocks, params.index, params.block);
+      Vue.set(this.blocks, params.index, params.block)
+      this.updateData()
     })
     Events.$on('delete-block', index => {
       this.blocks.splice(this.blocks.indexOf(index), 1)
+      this.updateData()
     })
   },
   methods: {
     checkMove: function(e) {
       window.console.log("Future index: " + e.draggedContext.futureIndex);
+    },
+    updateData: function() {
+      this.data = JSON.stringify(this.blocks)
+      console.log(this.data)
     }
   },
   components: {
@@ -69,6 +77,6 @@ export default {
 }
 .ghost {
   opacity: 0.5;
-  background: #c8ebfb;
+  background: darkturquoise;
 }
 </style>

@@ -10,14 +10,14 @@
     <div
       :is="block.tag"
       :class="[{'focus' : focus }, 'rte-block__content']"
-      v-model="block.data"
+      v-model="block.data.text"
       contenteditable="true" 
       ref="content"
       @focus="focus=true"
       @blur="focus=false"
       @input="onInput"
     >
-      {{ block.data }}
+      {{ block.data.text }}
     </div>
     <transition name="fade">
       <div class="button rte-block__delete" v-if="hover" @click="deleteBlock(index)"><i class="far fa-times-circle"></i></div>
@@ -27,6 +27,7 @@
 
 <script>
 import _ from 'lodash'
+import Toolbar from './Toolbar'
 import { Events } from '../directives/events'
 export default {
   props: {
@@ -37,15 +38,10 @@ export default {
     index: {
       type: Number,
       required: true
-    },
-    data: {
-      type: String,
-      require: true
     }
   },
   data() {
     return {
-      self: null,
       focus: true,
       hover: false
     }
@@ -58,8 +54,11 @@ export default {
       Events.$emit('delete-block', {index: index})
     },
     onInput: _.debounce(function(event) {
-      Events.$emit('update-block', {index: this.index, block: { tag: this.block.tag, type: this.block.type, data: event.target.innerText }})
-    }, 250)
+      Events.$emit('update-block', {index: this.index, block: { tag: this.block.tag, type: this.block.type, data: { text: event.target.innerText } } })
+    }, 500)
+  },
+  components: {
+    toolbar: Toolbar
   }
 }
 </script>
@@ -67,6 +66,7 @@ export default {
 <style lang="scss">
 .rte-block {
   position: relative;
+  margin: .25rem 0;
 
   &.hover {
     .rte-block__content {
@@ -77,7 +77,7 @@ export default {
   &__content {
     padding: 1rem 3rem 1rem 3rem;
     outline: none;
-    transition: all .3s ease;
+    transition: all .2s ease;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0);
     
     &.focus {
@@ -85,17 +85,21 @@ export default {
     }
   }
 
-  &__drag {
+  &__drag, &__delete {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+  }
+
+  &__drag {
     left: 1rem;
+
+    i {
+      font-size: 1rem;
+    }
   }
 
   &__delete {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     right: 1rem;
 
     &:hover {
