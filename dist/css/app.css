@@ -1,0 +1,28 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap);html,
+body {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+}
+
+.button {
+  display: inline-block;
+  background-color: transparent;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.button:hover.tool {
+  background-color: lightgreen;
+}
+
+.button:hover i {
+  color: black;
+}
+
+.button i {
+  font-size: 1.5rem;
+  color: gray;
+  transition: all 0.3s ease;
+}
+

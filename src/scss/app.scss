@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
+
+html, body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+.button {
+  display: inline-block;
+  background-color: transparent;
+  border-radius: 4px;
+  transition: all .3s ease;
+  cursor: pointer;
+
+  &:hover {
+    &.tool {
+      background-color: lightgreen;
+    }
+
+    i {
+      color: black;
+    }
+  }
+
+  i {
+    font-size: 1.5rem;
+    color: gray;
+    transition: all .3s ease;
+  }
+}
