@@ -106,7 +106,6 @@ export default {
 <style lang="scss">
 .rte-block {
   position: relative;
-  margin: .25rem 0;
 
   &.hover {
     .rte-block__content {
@@ -115,7 +114,7 @@ export default {
   }
 
   &__content {
-    padding: 1rem 3rem 1rem 3rem;
+    padding: .75rem 3rem .75rem 3rem;
     outline: none;
     transition: all .2s ease;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0);

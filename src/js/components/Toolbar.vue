@@ -79,7 +79,7 @@ export default {
 
   &__add {
     position: relative;
-    padding: .75rem 0;
+    padding: .5rem;
 
     &:hover {
       i {

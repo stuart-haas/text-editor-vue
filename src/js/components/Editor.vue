@@ -1,11 +1,12 @@
 <template>
-  <div class="rte">
+  <div :class="[{'dark' : darkMode }, 'rte']">
     <draggable
       :list="blocks"
       :disabled="!enabled"
       ghost-class="ghost"
       @start="dragging=true"
       @end="dragging=false"
+      @change="refresh"
       handle=".rte-block__drag"
     >
       <block
@@ -29,6 +30,7 @@ import { Events } from '../utils/events'
 export default {
   data() {
     return {
+      darkMode: false,
       enabled: true,
       dragging: false,
       blocks: [],
@@ -37,7 +39,7 @@ export default {
   },
   mounted() {
     Events.$on('add-block', params => {
-      this.blocks.push({ tag: params.tag, type: params.type, data: { text : '' } })
+      this.blocks.push({ tag: params.tag, type: params.type, data: { } })
       this.refresh()
     })
     Events.$on('update-block', params => {
@@ -66,6 +68,7 @@ export default {
 <style lang="scss">
 .rte {
   margin: 1rem;
+  padding: 1rem;
 }
 .ghost {
   opacity: 0.5;

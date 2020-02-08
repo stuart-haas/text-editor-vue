@@ -48,7 +48,7 @@ export default {
   position: absolute;
   top: 100%;
   left: 0;
-  padding-top: 1.25rem;
+  padding-top: .75rem;
 
   &__tools {
     display: flex;
