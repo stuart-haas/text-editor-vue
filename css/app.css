@@ -45,6 +45,58 @@ pre {
   transition: all 0.2s ease;
 }
 
+.switch {
+  position: relative;
+  top: 4px;
+  cursor: pointer;
+}
+
+.switch .label {
+  font-size: 0.8em;
+  color: #AAA;
+}
+
+.switch-icon,
+.switch-slide,
+.dropdown ul,
+.select-arrow {
+  transition: 0.2s ease;
+}
+
+.switch-slide {
+  display: inline-block;
+  width: 48px;
+  height: 16px;
+  background: #888;
+  border-radius: 8px;
+  margin: 0 4px 0 4px;
+  position: relative;
+  top: 2px;
+}
+
+.switch-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: #CCC;
+  border-radius: 12px;
+  position: absolute;
+  top: -4px;
+}
+
+.switch[class*=checked] .switch-slide {
+  background: #00BCAF;
+}
+
+.switch[class*=checked] .switch-icon {
+  background: #009F94;
+  left: 24px;
+}
+
+.switch[class*=checked] .label:last-child {
+  color: #009F94;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s ease;
