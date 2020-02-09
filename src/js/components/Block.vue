@@ -15,8 +15,9 @@
 </template>
 
 <script>
-import BaseElement from './BaseElement'
+import BlockElement from './BlockElement'
 import List from './List'
+import Paragraph from './Paragraph'
 import { Events } from '../utils/events'
 export default {
   props: {
@@ -40,7 +41,8 @@ export default {
     }
   },
   components: {
-    baseElement: BaseElement,
+    blockElement: BlockElement,
+    paragraph: Paragraph,
     list: List
   }
 }

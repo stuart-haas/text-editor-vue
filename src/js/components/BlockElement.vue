@@ -13,10 +13,10 @@
       @mouseup="onMouseUp"
       @mousedown="onMouseDown"
     >
-      {{ block.data.text }}
+      <slot></slot>
     </div>
     <transition name="fade">
-      <inline-toolbar v-if="format" :left="left" :index="index" :text="block.data.text"></inline-toolbar>
+      <inline-toolbar v-if="format && focus" :left="left" :index="index" :text="block.data.text"></inline-toolbar>
     </transition>
   </div>
 </template>
@@ -45,6 +45,9 @@ export default {
   },
   mounted() {
     this.$refs.content.focus()
+  },
+  render() {
+    return document.createElement('h1')
   },
   methods: {
     onKeyUp(event) {

@@ -1,14 +1,15 @@
 <template>
-  <div class="rte-block__list">
+  <div :class="[{'focus' : focus }, 'rte-block__element']">
     <div
-      :is="block.tag"
-      :class="[{'focus' : focus }, 'rte-block__content rte-list']"
-      :click-outside="onClickOutside"
       contenteditable="true" 
       ref="content"
+      :is="block.tag"
+      :class="['rte-block__content rte-block__list']"
+      :click-outside="onClickOutside"
       @focus="focus=true"
       @blur="focus=false"
-      @keyup="onInput"
+      @keyup="onKeyUp"
+      @input="onInput"
       @mouseup="onMouseUp"
       @mousedown="onMouseDown"
     >
@@ -27,12 +28,12 @@
 </template>
 
 <script>
-import BaseElement from './BaseElement'
+import BlockElement from './BlockElement'
 import ListItem from './ListItem'
 import InlineToolbar from './InlineToolbar'
 import { Events } from '../utils/events'
 export default {
-  extends: BaseElement,
+  extends: BlockElement,
   data() {
     return {
       items: [{ data: {}}]
@@ -40,13 +41,14 @@ export default {
   },
   methods: {
     onInput(event) {
+      var data = []
       var childNodes = event.target.childNodes
       for(var i = 0; i < childNodes.length; i ++) {
         var item = childNodes[i]
-        
+        data.push(item.innerHTML.trim())
       }
-
-      console.log(this.items)
+      this.block.data.items = data
+      Events.$emit('update-block', {index: this.index, block: this.block })
     }
   },
   components: {

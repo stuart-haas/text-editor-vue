@@ -6,32 +6,30 @@
     <div class="button rte-toolbar__add"><i class="fas fa-plus"></i></div>
     <transition name="fade">
       <div class="rte-toolbar__tools" v-if="hover">
-        <div class="button rte-toolbar__tool" @click="addBlock({component: 'baseElement', tag: 'div', type: 'paragraph', data: {}})"><i class="fas fa-paragraph"></i></div>
-        <sub-toolbar icon="fa fa-heading"></sub-toolbar>
-        <div class="button rte-toolbar__tool" @click="addBlock({ component: 'list', tag: 'ul', type: 'list', data: {style: 'unordered', items: []}})"><i class="fas fa-list-ul"></i></div>
-        <div class="button rte-toolbar__tool" @click="addBlock({component: 'list', tag: 'ol', type: 'list', data: {style: 'ordered', items: []}})"><i class="fas fa-list-ol"></i></div>
+        <tool
+          v-for="(tool, index) in tools"
+          :key="index"
+          :tool="tool"
+          :index="index"
+        >
+        </tool>
       </div>
     </transition>
   </div>
 </template>
 
 <script>
-import Toolbar from './Toolbar'
-import SubToolbar from './SubToolbar'
-import { Events } from '../utils/events'
+import Tool from './Tool'
+import { Tools } from '../config'
 export default {
   data() {
     return {
-      hover: false
-    }
-  },
-  methods: {
-    addBlock(params) {
-      Events.$emit('add-block', params)
+      hover: false,
+      tools: Tools
     }
   },
   components: {
-    subToolbar: SubToolbar
+    tool: Tool
   }
 }
 </script>
