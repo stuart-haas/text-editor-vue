@@ -4,7 +4,7 @@
       contenteditable="true" 
       ref="content"
       :is="block.tag"
-      :class="['rte-block__content rte-block__list']"
+      :class="['rte-block__content rte-list']"
       :click-outside="onClickOutside"
       @focus="focus=true"
       @blur="focus=false"
@@ -14,29 +14,25 @@
       @mousedown="onMouseDown"
     >
       <list-item
-        v-for="(item, index) in items"
+        v-for="(data, index) in items"
         :key="index"
-        :item="item"
+        :item="data"
         :index="index"
       >
       </list-item>
     </div>
-    <transition name="fade">
-      <inline-toolbar v-if="format" :left="left" :index="index" :text="block.data.text"></inline-toolbar>
-    </transition>
   </div>
 </template>
 
 <script>
 import BlockElement from './BlockElement'
 import ListItem from './ListItem'
-import InlineToolbar from './InlineToolbar'
 import { Events } from '../utils/events'
 export default {
   extends: BlockElement,
   data() {
     return {
-      items: [{ data: {}}]
+      items: ['']
     }
   },
   methods: {
@@ -52,8 +48,7 @@ export default {
     }
   },
   components: {
-    listItem: ListItem,
-    inlineToolbar: InlineToolbar
+    listItem: ListItem
   }
 }
 </script>

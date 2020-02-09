@@ -46,6 +46,9 @@ export default {
   mounted() {
     this.$refs.content.focus()
   },
+  destroyed() {
+    this.block.data = {}
+  },
   render() {
     return document.createElement('h1')
   },

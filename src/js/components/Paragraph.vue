@@ -15,16 +15,16 @@
     >
       {{ block.data.text }}
     </div>
-    <transition name="fade">
-      <inline-toolbar v-if="format" :left="left" :index="index" :text="block.data.text"></inline-toolbar>
-    </transition>
   </div>
 </template>
 
 <script>
 import BlockElement from './BlockElement'
 export default {
-  extends: BlockElement
+  extends: BlockElement,
+  components: {
+    blockElement: BlockElement
+  }
 }
 </script>
 

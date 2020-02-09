@@ -2,7 +2,7 @@
   <li
     class="rte-list__item"
   >
-    {{ item.data.text }}
+    {{ data }}
   </li>
 </template>
 
@@ -10,8 +10,8 @@
 import { Events } from '../utils/events'
 export default {
   props: {
-    item: {
-      type: Object,
+    data: {
+      type: String,
       require: true
     },
     index: {
