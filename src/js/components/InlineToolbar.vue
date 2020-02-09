@@ -1,12 +1,13 @@
 <template>
   <div 
     class="rte-inline-toolbar"
-    v-bind:style="{'top': top, 'left': left}"
+    ref="toolbar"
+    v-bind:style="{'left': leftOffset}"
     @mouseover="hover=true"
     @mouseleave="hover=false"
   >
     <div class="rte-inline-toolbar__tools">
-      <div class="button rte-inline-toolbar__tool" @mousedown="updateBlock($event, 'h1', 'heading')"><i class="fas fa-paragraph"></i></div>
+      <div class="button rte-inline-toolbar__tool" @mousedown="updateBlock($event, {component: 'baseElement', tag: 'h1', type: 'heading', data: { text: text }})"><i class="fas fa-paragraph"></i></div>
       <div class="button rte-inline-toolbar__tool" @mousedown="addFormat($event, 'bold')"><i class="fas fa-bold"></i></div>
       <div class="button rte-inline-toolbar__tool" @mousedown="addFormat($event, 'italic')"><i class="fas fa-italic"></i></div>
     </div>
@@ -23,30 +24,30 @@ export default {
     },
     text: {
       type: String,
-      required: true
+      required: false
     },
     left: {
-      type: String,
-      required: true
-    },
-    top: {
-      type: String,
+      type: Number,
       required: true
     }
   },
   data() {
     return {
-      hover: false
+      hover: false,
+      leftOffset: 0
     }
+  },
+  mounted() {
+    this.leftOffset = this.left + 'px'
   },
   methods: {
     addFormat(event, format) {
       event.preventDefault()
       document.execCommand(format, false, '')
     },
-    updateBlock(event, tag, type) {
+    updateBlock(event, params) {
       event.preventDefault()
-      Events.$emit('update-block', {index: this.index, block: { tag: tag, type: type, data: { text: this.text } } })
+      Events.$emit('update-block', {index: this.index, block: params})
     }
   }
 }
@@ -54,13 +55,13 @@ export default {
 
 <style lang="scss">
 .rte-inline-toolbar {
-  position: relative;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding-top: .5rem;
   z-index: 999;
 
   &__tools {
-    position: absolute;
-    top: 0;
-    left: 0;
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     border-radius: 4px;

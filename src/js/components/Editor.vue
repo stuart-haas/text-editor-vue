@@ -4,6 +4,7 @@
       :list="blocks"
       :disabled="!enabled"
       ghost-class="ghost"
+      enabled="false"
       @start="dragging=true"
       @end="dragging=false"
       @change="refresh"
@@ -39,7 +40,7 @@ export default {
   },
   mounted() {
     Events.$on('add-block', params => {
-      this.blocks.push({ tag: params.tag, type: params.type, data: { } })
+      this.blocks.push(params)
       this.refresh()
     })
     Events.$on('update-block', params => {
@@ -54,7 +55,6 @@ export default {
   methods: {
     refresh: function() {
       this.data = JSON.parse(JSON.stringify(this.blocks))
-      console.log(this.data)
     }
   },
   components: {

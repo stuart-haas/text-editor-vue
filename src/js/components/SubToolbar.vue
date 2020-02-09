@@ -8,12 +8,12 @@
     <div class="rte-subtoolbar">
       <transition name="fade">
         <div class="rte-subtoolbar__tools" v-if="hover">
-          <div class="button rte-subtoolbar__tool" @click="addBlock('h1', 'heading')">H1</div>
-          <div class="button rte-subtoolbar__tool" @click="addBlock('h2', 'heading')">H2</div>
-          <div class="button rte-subtoolbar__tool" @click="addBlock('h3', 'heading')">H3</div>
-          <div class="button rte-subtoolbar__tool" @click="addBlock('h4', 'heading')">H4</div>
-          <div class="button rte-subtoolbar__tool" @click="addBlock('h5', 'heading')">H5</div>
-          <div class="button rte-subtoolbar__tool" @click="addBlock('h6', 'heading')">H6</div>
+          <div class="button rte-subtoolbar__tool" @click="addBlock({component: 'baseElement', tag: 'h1', type: 'header', data: {}})">H1</div>
+          <div class="button rte-subtoolbar__tool" @click="addBlock({component: 'baseElement', tag: 'h2', type: 'header', data: {}})">H2</div>
+          <div class="button rte-subtoolbar__tool" @click="addBlock({component: 'baseElement', tag: 'h3', type: 'header', data: {}})">H3</div>
+          <div class="button rte-subtoolbar__tool" @click="addBlock({component: 'baseElement', tag: 'h4', type: 'header', data: {}})">H4</div>
+          <div class="button rte-subtoolbar__tool" @click="addBlock({component: 'baseElement', tag: 'h5', type: 'header', data: {}})">H5</div>
+          <div class="button rte-subtoolbar__tool" @click="addBlock({component: 'baseElement', tag: 'h6', type: 'header', data: {}})">H6</div>
         </div>
       </transition>
     </div>
@@ -36,8 +36,8 @@ export default {
     }
   },
   methods: {
-    addBlock(tag, type) {
-      Events.$emit('add-block', {tag: tag, type: type})
+    addBlock(params) {
+      Events.$emit('add-block', params)
     }
   }
 }

@@ -5,11 +5,11 @@
   >
     <div class="button rte-toolbar__add"><i class="fas fa-plus"></i></div>
     <transition name="fade">
-      <div class="rte-toolbar__tools" v-if="hover && !format">
-        <div class="button rte-toolbar__tool" @click="addBlock('div', 'paragraph')"><i class="fas fa-paragraph"></i></div>
+      <div class="rte-toolbar__tools" v-if="hover">
+        <div class="button rte-toolbar__tool" @click="addBlock({component: 'baseElement', tag: 'div', type: 'paragraph', data: {}})"><i class="fas fa-paragraph"></i></div>
         <sub-toolbar icon="fa fa-heading"></sub-toolbar>
-        <div class="button rte-toolbar__tool" @click="addBlock('ul', 'list')"><i class="fas fa-list-ul"></i></div>
-        <div class="button rte-toolbar__tool" @click="addBlock('ol', 'list')"><i class="fas fa-list-ol"></i></div>
+        <div class="button rte-toolbar__tool" @click="addBlock({ component: 'list', tag: 'ul', type: 'list', data: {style: 'unordered', items: []}})"><i class="fas fa-list-ul"></i></div>
+        <div class="button rte-toolbar__tool" @click="addBlock({component: 'list', tag: 'ol', type: 'list', data: {style: 'ordered', items: []}})"><i class="fas fa-list-ol"></i></div>
       </div>
     </transition>
   </div>
@@ -22,18 +22,12 @@ import { Events } from '../utils/events'
 export default {
   data() {
     return {
-      hover: false,
-      format: false
+      hover: false
     }
   },
-  mounted() {
-    Events.$on('toggle-format', params => {
-      this.format = params.format
-    })
-  },
   methods: {
-    addBlock(tag, type) {
-      Events.$emit('add-block', {tag: tag, type: type})
+    addBlock(params) {
+      Events.$emit('add-block', params)
     }
   },
   components: {
