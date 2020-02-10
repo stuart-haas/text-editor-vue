@@ -8,6 +8,7 @@
       :click-outside="onClickOutside"
       @focus="focus=true"
       @blur="focus=false"
+      @keyup="onKeyUp"
       @keydown="onKeyDown"
       @input="onInput"
       @mouseup="onMouseUp"
@@ -50,19 +51,13 @@ export default {
     this.block.data = {}
   },
   methods: {
+    onKeyUp(event) {
+      
+    },
     onKeyDown(event) {
       this.toggleFormat(false)
       if(event.target.textContent == '' && (event.keyCode == 8 || event.keyCode == 46)) {
         Events.$emit('delete-block', {index: this.index})
-      }
-      if(event.keyCode == 13) {
-        Events.$emit('add-block', {
-          component: 'paragraph', 
-          icon: 'fas fa-paragraph',
-          tag: 'div', 
-          type: 'paragraph',
-          data: {}
-        })
       }
     },
     onInput(event) {
