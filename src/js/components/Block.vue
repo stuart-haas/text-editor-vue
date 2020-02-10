@@ -7,7 +7,7 @@
     <transition name="fade">
       <div class="button rte-block__drag" v-if="hover"><i class="fa fa-align-justify"></i></div>
     </transition>
-    <div :is="block.component" :block="block" :index="index"></div>
+    <component :is="block.component" :block="block" :index="index"></component>
     <transition name="fade">
       <div class="button rte-block__delete" v-if="hover" @click="deleteBlock(index)"><i class="far fa-times-circle"></i></div>
     </transition>

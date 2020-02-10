@@ -6,30 +6,35 @@
     <div class="button rte-toolbar__add"><i class="fas fa-plus"></i></div>
     <transition name="fade">
       <div class="rte-toolbar__tools" v-if="hover">
-        <tool
-          v-for="(tool, index) in tools"
-          :key="index"
-          :tool="tool"
-          :index="index"
-        >
-        </tool>
+        <div class="button rte-toolbar__tool" @click="addBlock({component: 'heading', tag: 'h1', type: 'heading', data: {}})">
+          <i class="fas fa-heading"></i>
+        </div>
+        <div class="button rte-toolbar__tool" @click="addBlock({component: 'paragraph', tag: 'div', type: 'paragraph', data: {}})">
+          <i class="fas fa-paragraph"></i>
+        </div>
+        <div class="button rte-toolbar__tool" @click="addBlock({component: 'list', tag: 'ul', type: 'list', data: {style: 'unordered', items:['']}})">
+          <i class="fas fa-list-ul"></i>
+        </div>
+        <div class="button rte-toolbar__tool" @click="addBlock({component: 'list', tag: 'ol', type: 'list', data: {style: 'ordered', items:['']}})">
+          <i class="fas fa-list-ol"></i>
+        </div>
       </div>
     </transition>
   </div>
 </template>
 
 <script>
-import Tool from './Tool'
-import { Tools } from '../config'
+import { Events } from '../utils/events'
 export default {
   data() {
     return {
-      hover: false,
-      tools: Tools
+      hover: false
     }
   },
-  components: {
-    tool: Tool
+  methods: {
+    addBlock(params) {
+      Events.$emit('add-block', params)
+    }
   }
 }
 </script>

@@ -55,6 +55,15 @@ export default {
       if(event.target.textContent == '' && (event.keyCode == 8 || event.keyCode == 46)) {
         Events.$emit('delete-block', {index: this.index})
       }
+      if(event.keyCode == 13) {
+        Events.$emit('add-block', {
+          component: 'paragraph', 
+          icon: 'fas fa-paragraph',
+          tag: 'div', 
+          type: 'paragraph',
+          data: {}
+        })
+      }
     },
     onInput(event) {
       this.block.data.text = event.target.textContent !== '' ? this.block.data.text = event.target.innerHTML.trim() : ''
