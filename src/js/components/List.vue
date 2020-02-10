@@ -8,7 +8,7 @@
       :click-outside="onClickOutside"
       @focus="focus=true"
       @blur="focus=false"
-      @keyup="onKeyUp"
+      @keydown="onKeyDown"
       @input="onInput"
       @mouseup="onMouseUp"
       @mousedown="onMouseDown"

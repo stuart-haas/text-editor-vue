@@ -8,7 +8,7 @@
       :click-outside="onClickOutside"
       @focus="focus=true"
       @blur="focus=false"
-      @keyup="onKeyUp"
+      @keydown="onKeyDown"
       @input="onInput"
       @mouseup="onMouseUp"
       @mousedown="onMouseDown"
@@ -49,16 +49,16 @@ export default {
   destroyed() {
     this.block.data = {}
   },
-  render() {
-    return document.createElement('h1')
-  },
   methods: {
-    onKeyUp(event) {
+    onKeyDown(event) {
       this.toggleFormat(false)
+      if(event.target.textContent == '' && (event.keyCode == 8 || event.keyCode == 46)) {
+        Events.$emit('delete-block', {index: this.index})
+      }
     },
     onInput(event) {
       this.block.data.text = event.target.textContent !== '' ? this.block.data.text = event.target.innerHTML.trim() : ''
-      Events.$emit('update-block', {index: this.index, block: this.block })
+      Events.$emit('update-block', {index: this.index, block: this.block})
     },
     onMouseUp(event) {
       var text = window.getSelection().toString()
