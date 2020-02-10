@@ -1,5 +1,12 @@
 export const Tools = [
   {
+    component: 'heading', 
+    icon: 'fas fa-heading',
+    tag: 'h1', 
+    type: 'heading', 
+    data: {}
+  },
+  {
     component: 'paragraph', 
     icon: 'fas fa-paragraph',
     tag: 'div', 

@@ -16,8 +16,9 @@
 
 <script>
 import BlockElement from './BlockElement'
-import List from './List'
+import Heading from './Heading'
 import Paragraph from './Paragraph'
+import List from './List'
 import { Events } from '../utils/events'
 export default {
   props: {
@@ -42,6 +43,7 @@ export default {
   },
   components: {
     blockElement: BlockElement,
+    heading: Heading,
     paragraph: Paragraph,
     list: List
   }
